@@ -4,4 +4,3 @@ python-docx==0.8.11
 openai==0.28.1
 pymupdf==1.22.3
 Pillow==10.1.0
-pytesseract==0.3.10
