@@ -7,8 +7,6 @@ import openai
 import os
 import fitz
 import re
-from PIL import Image
-import pytesseract
 
 app = Flask(__name__)
 CORS(app)
@@ -27,18 +25,12 @@ def extract_text_pdf(file):
     pdf = fitz.open(stream=file.read(), filetype="pdf")
     return "\n".join([page.get_text() for page in pdf])
 
-def extract_text_image(file):
-    image = Image.open(file.stream)
-    return pytesseract.image_to_string(image)
-
 def extract_text(file_storage):
     filename = file_storage.filename.lower()
     if filename.endswith(".pdf"):
         return extract_text_pdf(file_storage)
     elif filename.endswith(".docx") or filename.endswith(".doc"):
         return extract_text_docx(file_storage)
-    elif filename.endswith((".png", ".jpg", ".jpeg")):
-        return extract_text_image(file_storage)
     else:
         return ""
 
